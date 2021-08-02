@@ -6,46 +6,40 @@ const cross_key = document.querySelector(".cross_key");
 const answer_key = document.querySelector(".answer_key");
 // const calculator_key = document.getElementsByTagName("input");
 const userInput = document.querySelector(".display");
+
 let displayNum = "";
 let answerNum = "";
-let firstNum = 0;
-let secondNum = 0;
-let hadClick = 0;
-
-
+let firstNum = "";
+let secondNum = "";
+let unClick = true;
 
 for (let i = 0; i < calculator_key.length; i++) {
     calculator_key[i].addEventListener("click", () => {
-        if (hadClick === 1) {
-            let key_value = calculator_key[i].value;
-            displayNum = displayNum + parseInt(key_value, 10);
-            userInput.textContent = displayNum;
-            secondNum = displayNum;
-            key_value = 0;
+        if (unClick) {
+            let key_value = parseInt(calculator_key[i].value, 10);
+            firstNum = firstNum + key_value;
+            userInput.textContent = firstNum;
+            // key_value = "";
         } else {
             let key_value = calculator_key[i].value;
-            displayNum = displayNum + parseInt(key_value, 10);
-            userInput.textContent = displayNum;
-            firstNum = firstNum + displayNum;
-            key_value = 0;
+            secondNum = secondNum + parseInt(key_value, 10);
+            userInput.textContent = secondNum;
+            // key_value = "";
         }
-
     })
 }
 plus_key.addEventListener("click", () => {
-    userInput.textContent = "";
     userInput.textContent = "+";
-    firstNum = 0;
-    key_value = 0;
-    hadClick = 1;
+    unClick = false;
 })
 answer_key.addEventListener("click", () => {
-    console.log("plus", displayNum);
+    console.log("plus", firstNum, secondNum);
     firstNum = parseInt(firstNum, 10);
     secondNum = parseInt(secondNum, 10);
-    console.log(firstNum + secondNum)
     answerNum = firstNum + secondNum;
     userInput.textContent = answerNum;
-    firstNum = 0;
-    secondNum = 0;
+    firstNum = "";
+    secondNum = "";
+    unClick = true;
+
 })
